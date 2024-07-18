@@ -821,14 +821,14 @@ function date_to_epoch( $d, $gmt = true ) {
 
   if ( $gmt )
     return gmmktime ( $dH, $di, $ds,
-      substr ( $d, 4, 2 ),
-      substr ( $d, 6, 2 ),
-      substr ( $d, 0, 4 ) );
+      (int)substr ( $d, 4, 2 ),
+      (int)substr ( $d, 6, 2 ),
+      (int)substr ( $d, 0, 4 ) );
   else
     return mktime ( $dH, $di, $ds,
-      substr ( $d, 4, 2 ),
-      substr ( $d, 6, 2 ),
-      substr ( $d, 0, 4 ) );
+      (int)substr ( $d, 4, 2 ),
+      (int)substr ( $d, 6, 2 ),
+      (int)substr ( $d, 0, 4 ) );
 }
 
 
@@ -2581,9 +2581,9 @@ function get_groups($user, $includeUserlist=false)
       $res = dbi_execute($sql, [$groups[$i]['cal_group_id']]);
       while ($row = dbi_fetch_row($res)) {
         if (isset($users_by_name[$row[0]])){
-            // It is possible some users assigned to this group may not exist, 
-            // so we skip those that don't. For example, if users are fetched 
-            // from an external source via user-app-*.php, and one of those 
+            // It is possible some users assigned to this group may not exist,
+            // so we skip those that don't. For example, if users are fetched
+            // from an external source via user-app-*.php, and one of those
             // users is deleted externally.
             $users[] = $users_by_name[$row[0]];
         }

@@ -16,7 +16,7 @@ else {
   echo '
     <form action="reject_entry.php'
    . ( empty ( $_SERVER['QUERY_STRING'] ) ? '' : '?' . $_SERVER['QUERY_STRING'] )
-   . '" method="post" name="add_comments">'.
+   . '" method="post" name="add_comments">';
   print_form_key ();
   echo '<table cellspacing="5">
         <tr>
@@ -64,6 +64,7 @@ if ( empty ( $error ) && $id > 0 ) {
   $res = dbi_execute ( 'SELECT cal_login FROM webcal_entry_user
   WHERE cal_id = ?
     AND cal_status = "A"', [$id] );
+  $partlogin = [];
   if ( $res ) {
     while ( $row = dbi_fetch_row ( $res ) ) {
       $partlogin[] = $row[0];
