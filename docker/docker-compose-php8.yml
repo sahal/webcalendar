@@ -22,7 +22,7 @@ version: '3.1'
 services:
 
   db:
-    image: mariadb
+    image: docker.io/mariadb
     container_name: webcalendar-db
     volumes:
       - mysql-data:/var/lib/mysql
@@ -35,7 +35,7 @@ services:
     restart: unless-stopped
 
   webcalendar-php8:
-    image: webcalendar
+    image: localhost/k5nus/webcalendar
     depends_on:
       - db
     ports:
