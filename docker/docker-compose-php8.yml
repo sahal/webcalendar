@@ -27,7 +27,12 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
       - /etc/localtime:/etc/localtime:ro
-      - ../install/sql/:/loadsql
+      - type: bind
+        source: ../install/sql/tables-mysql.sql
+        target: /docker-entrypoint-initdb.d/tables-mysql.sql
+      - type: bind
+        source: ../install/sql/permissions-mysql.sql
+        target: /docker-entrypoint-initdb.d/permissions-mysql.sql
     environment:
       - MYSQL_ROOT_PASSWORD=Webcalendar.1
       - MYSQL_PASSWORD=Webcalendar.1
