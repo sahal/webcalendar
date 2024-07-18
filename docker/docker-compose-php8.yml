@@ -27,6 +27,7 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
       - /etc/localtime:/etc/localtime:ro
+      - ../install/sql/:/loadsql
     environment:
       - MYSQL_ROOT_PASSWORD=Webcalendar.1
       - MYSQL_PASSWORD=Webcalendar.1
