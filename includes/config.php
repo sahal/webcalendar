@@ -164,6 +164,7 @@ function get_full_include_path($filename)
  */
 function do_config($callingFromInstall=false)
 {
+
   global $db_database, $db_debug, $db_host, $db_login, $db_password, $db_persistent,
     $db_type, $ignore_user_case, $NONUSER_PREFIX, $phpdbiVerbose, $PROGRAM_DATE,
     $PROGRAM_NAME, $PROGRAM_URL, $PROGRAM_VERSION, $readonly, $run_mode, $settings,
@@ -347,10 +348,15 @@ function do_config($callingFromInstall=false)
   $c = @dbi_connect($db_host, $db_login, $db_password, $db_database, false);
 
   if ($c && !$callingFromInstall) {
-    $rows = dbi_get_cached_rows('SELECT cal_value FROM webcal_config
-      WHERE cal_setting = \'WEBCAL_PROGRAM_VERSION\'');
-
-    //echo "<pre>"; print_r($rows); echo "</pre>"; exit;
+    try {
+      $rows = dbi_get_cached_rows('SELECT cal_value FROM webcal_config
+        WHERE cal_setting = \'WEBCAL_PROGRAM_VERSION\'',[],false,false);
+    } catch (Exception $ex) {
+      echo $e->getMessage();
+      error_log($e->getMessage());
+      header($locateStr);
+      exit;
+    }
     if (!$rows || empty($rows) || empty($rows[0])) {
       header($locateStr);
       exit;
