@@ -533,7 +533,7 @@ function getDatabaseVersionFromSchema($silent = true)
         }
         $dbVersion = $database_upgrade_matrix[$i][2];
         $res = null;
-        // Clean up our test 
+        // Clean up our test
         $sql = $database_upgrade_matrix[$i][1];
         if ($sql != '')
           dbi_execute($sql, [], false, $show_all_errors);
@@ -623,7 +623,7 @@ function extractSqlCommandsFromFile($filename)
 /**
  * Executes SQL statements from a specified file.
  *
- * This function reads the content of the provided SQL file using 
+ * This function reads the content of the provided SQL file using
  * extractSqlCommandsFromFile() and then executes each SQL statement.
  *
  * @param string $filename The path to the SQL file.
