@@ -1,5 +1,5 @@
 # Use the official PHP image with Apache
-FROM docker.io/php:8-apache
+FROM php:8-apache
 LABEL maintainer="craig@k5n.us"
 LABEL vendor="k5n.us"
 
@@ -25,22 +25,20 @@ RUN apt-get update \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd
 
-# Copy all files except those in .dockerignore
-COPY . /var/www/html/
-
-# Create an empty settings.php file with write permissions for anyone
-# to allow the web-based installer to update it.
-RUN touch /var/www/html/includes/settings.php
-RUN chmod 777 /var/www/html/includes/settings.php
-
-# Kinda of annoying not to be able to write to the filesystem via an
-# editor if one doesn't exist
-RUN apt-get update\
- && apt-get install -y \
-         vim \
-         nano \
- && rm -rf /var/cache/apt/archives /var/lib/apt/lists/* \
- && apt-get clean
+## Create an empty settings.php file with write permissions for anyone
+## to allow the web-based installer to update it.
+#RUN mkdir -p /var/www/html/includes/ \
+#    && touch /var/www/html/includes/settings.php \
+#    && chmod 777 /var/www/html/includes/settings.php
+#
+## Kinda of annoying not to be able to write to the filesystem via an
+## editor if one doesn't exist
+#RUN apt-get update\
+# && apt-get install -y \
+#         vim \
+#         nano \
+# && rm -rf /var/cache/apt/archives /var/lib/apt/lists/* \
+# && apt-get clean
 
 # Set working directory
 WORKDIR /var/www/html
